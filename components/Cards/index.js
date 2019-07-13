@@ -95,11 +95,10 @@ function createCards(data) {
       /*  console.log("technology: " + tech)
         console.log(data.data.articles[tech])
         need to use bracket notation [tech] ----> why?*/
-        let arr = data.data.articles[tech]
-        console.log(arr)
-        arr.forEach(item => {
-            const card = createCard(item.headline, item.authorPhoto, item.authorName)
-            cardsContainer.appendChild(card)
+            data.data.articles[tech].forEach(item => {
+                const card = createCard(item.headline, item.authorPhoto, item.authorName)
+                card.dataset.tab = tech
+                cardsContainer.appendChild(card)
         });
     }
 }
@@ -126,6 +125,7 @@ function createCard(title, url, name) {
     headLine.classList.add("headline")
     author.classList.add("author")
     imgContainer.classList.add("img-container")
+
 
     //set text content
     headLine.textContent = title

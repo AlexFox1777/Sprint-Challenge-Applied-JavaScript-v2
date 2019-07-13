@@ -13,44 +13,64 @@ const topicsURL = "https://lambda-times-backend.herokuapp.com/topics"
 
 axios.get(topicsURL)
     .then( response =>{
-       createTab(response)
+       createTabs(response)
+        document.querySelectorAll('.tab').forEach(tab => new tabLink(tab))
     })
     .catch(error => {
         console.log("Error:", error);
     })
 
-function createTab(response){
+function createTabs(response){
+    createTab('all')
+    document.querySelector(".tab").classList.add('active-tab')
     response.data.topics.forEach(item =>{
-        const tab = document.createElement("div")
-        tab.classList.add('tab')
-        tab.dataset.tab = item
-        tab.textContent = item
-        topics.appendChild(tab)
+        console.log("Tab name " + item)
+        createTab(item)
+
     })
 }
+function createTab(item) {
+    const tab = document.createElement("div")
+    tab.classList.add('tab')
+    tab.dataset.tab = item
+    console.log("Data of the tab " + tab.dataset.tab )
+    tab.textContent = item
+    console.log("Text of the tab " + tab.textContent)
+    topics.appendChild(tab)
+}
+
 
 //change category
 
-<!-- TABS COMPONENT -->
-/*
-<div class="tabs">
-    <div class="topics">
-    <span class="title">TRENDING TOPICS:</span>
-<div data-tab="all" class="tab active-tab">ALL</div>
-    <div data-tab="javascript" class="tab">JAVASCRIPT</div>
-    <div data-tab="technology" class="tab">TECHNOLOGY</div>
-    <div data-tab="node" class="tab">NODE.JS</div>
-    <div data-tab="jquery" class="tab">jQUERY</div>
-    <div data-tab="bootstrap" class="tab">BOOTSTRAP</div>
-    </div>
-    </div>
-*/
 class tabLink {
     constructor(tab){
         this.tab = tab
         this.tabData = this.tab.dataset.tab
-
-        this.tab.addEventListener('click', () => )
+        this.tab.addEventListener('click', () => this.selectTab())
     }
+    selectTab(){
+        document.querySelectorAll('.tab').forEach(tab =>{
+            tab.classList.remove("active-tab")
+        })
+        this.tab.classList.add("active-tab")
+        this.selectCard()
+    }
+    selectCard(){
+        document.querySelectorAll('.card').forEach(card =>{
+        card.style.display = 'none'
+        })
+        if(this.tabData == 'all'){
+            document.querySelectorAll('.card').forEach(card =>{
+                card.style.display = 'flex'
+            })
+        }else {
+            console.log("DataTab again " + `.card[data-tab='${this.tabData}']`)
+            document.querySelectorAll(`.card[data-tab='${this.tabData}']`).forEach(card =>{
+                card.style.display = 'flex'
+            })
+        }
+    }
+
+
 }
-document.querySelectorAll('tab').forEach(tab => tabLink(tab))
+
