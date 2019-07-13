@@ -92,9 +92,9 @@ axios.get(articlesUrl)
 function createCards(data) {
     const cardsContainer = document.querySelector('.cards-container')
     for(let tech in data.data.articles){
-        console.log("technology: " + tech)
+      /*  console.log("technology: " + tech)
         console.log(data.data.articles[tech])
-        //need to use bracket notation [tech] ----> why?
+        need to use bracket notation [tech] ----> why?*/
         let arr = data.data.articles[tech]
         console.log(arr)
         arr.forEach(item => {
